@@ -1,7 +1,5 @@
 import AWS from 'aws-sdk';
-import middy from '@middy/core';
-import httpEventNormalizer from "@middy/http-event-normalizer";
-import httpErrorHandler from "@middy/http-error-handler";
+import commonMiddleware from "../lib/commonMiddleware.mjs";
 import createError from 'http-errors';
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -32,6 +30,4 @@ async function getAuction(event, context) {
   };
 }
 
-export const handler = middy(getAuction)
-    .use(httpEventNormalizer())
-    .use(httpErrorHandler());
+export const handler = commonMiddleware(getAuction);
